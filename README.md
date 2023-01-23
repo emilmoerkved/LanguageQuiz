@@ -2,7 +2,7 @@
 Multiple choice quiz to memorize words to learn italian
 
 Using csv files with ";" as delimiter to play the game. See Dictionaries folder for examples.
-The folder to be opened must be adjusted for local usage.
+The folder to be opened must be adjusted for local usage. The csv files need to have a ANSI format.
 
 Needed pip installations: tkinter, PIL, csv and random
 
