@@ -76,7 +76,7 @@ class StartPage(tk.Frame):
         self.img_bg = img_bg
         c_bg.create_image(0, 0, anchor=NW, image=img_bg)
 
-        title_label = ttk.Label(self, text="Language Quiz", font=LARGE_FONT, background='#C9CCD6')
+        title_label = ttk.Label(self, text="Language Quiz", font=('Verdana', 24), background='#C9CCD6')
         title_label.grid(column=0, row=0, columnspan=controller.grid_columns)
 
         start_game_button = ttk.Button(self, text="Start game", style='my.TButton',
@@ -114,16 +114,33 @@ class Question(tk.Frame):
         style.configure('Alt2.TButton', font=('Helvetica', 24), foreground='blue')
         style.configure('Alt3.TButton', font=('Helvetica', 24), foreground='purple')
 
-        self.question = ttk.Label(self, text=str(controller.quiz.question), font=LARGE_FONT, background='#7CABEA')
+        def adjust_string(string):
+            if len(string) > 21:
+                text_split = string.split()
+                string = ''
+                line_length = 0
+                for word in text_split:
+                    if line_length > 18:
+                        string += ' \n'  # new line
+                        line_length = 0
+                    elif string != '':
+                        string += ' '  # white space if not first word
+                        line_length += 1
+                    string += word
+                    line_length += len(word)
+            return string
+
+        self.question = ttk.Label(self, text=adjust_string(str(controller.quiz.question)),
+                                  font=('Verdana', 24), background='#7CABEA')
         self.question.grid(column=0, row=6, rowspan=3)
 
-        self.alt1 = ttk.Button(self, text=str(controller.quiz.alternatives[0]),
+        self.alt1 = ttk.Button(self, text=adjust_string(str(controller.quiz.alternatives[0])),
                               command=lambda: self._check_answer(controller.quiz.alternatives[0], controller),
                                style='Alt1.TButton')
-        self.alt2 = ttk.Button(self, text=str(controller.quiz.alternatives[1]),
+        self.alt2 = ttk.Button(self, text=adjust_string(str(controller.quiz.alternatives[1])),
                               command=lambda: self._check_answer(controller.quiz.alternatives[1], controller),
                                style='Alt2.TButton')
-        self.alt3 = ttk.Button(self, text=str(controller.quiz.alternatives[2]),
+        self.alt3 = ttk.Button(self, text=adjust_string(str(controller.quiz.alternatives[2])),
                               command=lambda: self._check_answer(controller.quiz.alternatives[2], controller),
                                style='Alt3.TButton')
 
@@ -207,7 +224,7 @@ class EndOfGame(tk.Frame):
         self.img_bg = img_bg
         c_bg.create_image(0, 0, anchor=NW, image=img_bg)
 
-        title_label = ttk.Label(self, text="Well Done!", font=LARGE_FONT, background='#C9CCD6')
+        title_label = ttk.Label(self, text="Well Done!", font=('Verdana', 24), background='#C9CCD6')
         title_label.grid(column=0, row=0, columnspan=controller.grid_columns)
 
         start_game_button = ttk.Button(self, text="Return to start page", style='my.TButton',
